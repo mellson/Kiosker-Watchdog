@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Kiosker Watchdog.iml" filepath="$PROJECT_DIR$/Kiosker Watchdog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Kiosker Watchdog/Kiosker Watchdog-Kiosker Watchdog.iml" filepath="$PROJECT_DIR$/Kiosker Watchdog/Kiosker Watchdog-Kiosker Watchdog.iml" />
+    </modules>
+  </component>
+</project>
+
