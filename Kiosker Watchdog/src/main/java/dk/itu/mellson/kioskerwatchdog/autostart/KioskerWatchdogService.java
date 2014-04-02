@@ -18,6 +18,8 @@ import rx.Subscriber;
 public class KioskerWatchdogService extends Service
 {
     private static final String TAG = "KioskerWatchdog Service";
+    private Subscriber<Long> watchDogSubscriber;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -30,7 +32,15 @@ public class KioskerWatchdogService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Sending you back into Kiosker", Toast.LENGTH_LONG).show();
-        Observable.timer(10, TimeUnit.MINUTES).repeat().subscribe(new Subscriber<Long>() {
+        Observable.timer(10, TimeUnit.MINUTES).repeat().subscribe(getWatchDogSubscriber());
+        backToKiosker(KioskerWatchdogService.this);
+        return START_STICKY;
+    }
+
+    private Subscriber<? super Long> getWatchDogSubscriber() {
+        if (watchDogSubscriber != null && !watchDogSubscriber.isUnsubscribed())
+            watchDogSubscriber.unsubscribe();
+        watchDogSubscriber = new Subscriber<Long>() {
             @Override
             public void onCompleted() {
 
@@ -51,9 +61,8 @@ public class KioskerWatchdogService extends Service
                 if (((PowerManager) getSystemService(Context.POWER_SERVICE)).isScreenOn())
                     backToKiosker(KioskerWatchdogService.this);
             }
-        });
-        backToKiosker(KioskerWatchdogService.this);
-        return START_STICKY;
+        };
+        return watchDogSubscriber;
     }
 
     private void backToKiosker(Context context) {
