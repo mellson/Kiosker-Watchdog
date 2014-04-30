@@ -1,7 +1,11 @@
 .gradle
 /local.properties
 /.idea/workspace.xml
-/.idea/libraries/*
+/.idea/libraries
 .DS_Store
 
 signing.properties
+
+/.idea/libraries/rxjava_android_0_17_2.xml
+
+/.idea/libraries/rxjava_core_0_17_2.xml
