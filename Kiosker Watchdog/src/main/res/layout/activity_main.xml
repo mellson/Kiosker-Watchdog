@@ -6,6 +6,12 @@
     android:gravity="center"
     tools:context="dk.itu.mellson.kioskerwatchdog.autostart.KioskerWatchdogActivity">
 
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

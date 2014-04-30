@@ -15,8 +15,7 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscriber;
 
-public class KioskerWatchdogService extends Service
-{
+public class KioskerWatchdogService extends Service {
     private static final String TAG = "KioskerWatchdog Service";
     private Subscriber<Long> watchDogSubscriber;
 
@@ -24,6 +23,7 @@ public class KioskerWatchdogService extends Service
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     public void onDestroy() {
         Toast.makeText(this, "KioskerWatchdog Service Stopped", Toast.LENGTH_LONG).show();
         Log.d(TAG, "onDestroy");
@@ -68,18 +68,12 @@ public class KioskerWatchdogService extends Service
     private void backToKiosker(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(100);
-        assert taskInfo != null;
-        for (ActivityManager.RunningTaskInfo taskInfo1 : taskInfo) {
-            assert taskInfo1.topActivity != null;
-            String className = taskInfo1.topActivity.getClassName();
-            if (className != null && !className.isEmpty()) {
-                Log.d(TAG, taskInfo1.topActivity.getClassName());
-                if (!isClassNameLegal(className)) {
-                    Log.d(TAG, "Starting Kiosker.");
-                    startKiosker();
-                    return;
-                }
+        String className = taskInfo.get(0).topActivity.getClassName();
+        if (className != null && !className.isEmpty()) {
+            if (!isClassNameLegal(className)) {
+                startKiosker();
             }
+
         }
     }
 
@@ -90,7 +84,7 @@ public class KioskerWatchdogService extends Service
     }
 
     private void startKiosker() {
-        Log.d(TAG, "Checking if Kiosker is running.");
+        Log.d(TAG, "Starting Kiosker.");
         Intent kioskerIntent = getPackageManager().getLaunchIntentForPackage("dk.itu.kiosker");
         startActivity(kioskerIntent);
     }
